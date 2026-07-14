@@ -44,7 +44,6 @@
         #particles-js { position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; z-index: -1; pointer-events: none; }
 
         /* --- SOBRE ELEGANTE --- */
-        /* Ajuste: Fondo blanco como se solicitó */
         #envelope-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1.5s ease; }
         
         .envelope-wrapper { position: relative; width: 340px; height: 230px; cursor: pointer; animation: float 3s ease-in-out infinite; perspective: 1000px; }
@@ -98,19 +97,19 @@
         /* --- SEPARADOR ELEGANTE --- */
         .divider { width: 60px; height: 1px; background: var(--dorado); margin: 30px auto; opacity: 0.7; }
 
-        /* --- ITINERARIO INTERCALADO ANIMADO CORREGIDO --- */
-        .timeline { position: relative; max-width: 800px; margin: 40px auto; width: 100%; }
+        /* --- ITINERARIO ZIG-ZAG PERFECTO --- */
+        .timeline { position: relative; max-width: 800px; margin: 40px auto; width: 100%; display: flex; flex-direction: column; }
         .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--dorado); transform: translateX(-50%); opacity: 0.5; }
         
-        .timeline-item { position: relative; width: 50%; padding: 0 40px; margin-bottom: 50px; opacity: 0; box-sizing: border-box; }
+        .timeline-item { position: relative; width: 50%; padding: 0 30px; margin-bottom: 50px; opacity: 0; box-sizing: border-box; }
         
-        /* Ajustes precisos para mantenerlos izquierda y derecha */
-        .timeline-item.left { margin-right: auto; margin-left: 0; text-align: right; }
-        .timeline-item.right { margin-left: auto; margin-right: 0; text-align: left; }
+        /* Alineación Flexbox intercalada */
+        .timeline-item.left { align-self: flex-start; text-align: right; }
+        .timeline-item.right { align-self: flex-end; text-align: left; }
         
         .timeline-item::after { content: ''; position: absolute; top: 0; width: 14px; height: 14px; background: var(--texto-principal); border: 2px solid var(--dorado); border-radius: 50%; z-index: 1; box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
         
-        /* Alineación del punto indicador */
+        /* Posición de los puntos indicadores en el centro exacto */
         .timeline-item.left::after { right: -7px; }
         .timeline-item.right::after { left: -7px; }
         
@@ -184,11 +183,10 @@
 
         @media (max-width: 768px) {
             h1 { font-size: 4.5rem; }
-            /* Ajuste del itinerario para móviles */
-            .timeline::before { left: 20px; transform: none; }
-            .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; text-align: left !important; margin: 0 0 40px 0 !important; }
-            .timeline-item::after { left: 13px !important; right: auto !important; }
-            .timeline-item.left.slide-in, .timeline-item.right.slide-in { animation: slideInRight 0.8s forwards; }
+            /* Se mantiene el zig-zag en móviles, solo ajustamos los tamaños y el padding para que el texto quepa bien */
+            .timeline-item { padding: 0 10px; }
+            .time-label { font-size: 1.1rem; }
+            .event-label { font-size: 0.85rem; }
             .map-container iframe { width: 100%; height: 350px; }
         }
     </style>
@@ -210,7 +208,6 @@
             <div class="envelope-body"></div>
             <div class="wax-seal">N</div>
         </div>
-        <!-- Texto gris oscuro para que sea legible sobre el fondo blanco -->
         <div class="editorial-text" style="margin-top: 60px; font-size: 0.8rem; color: #5A4A4A;">Toca para abrir</div>
     </div>
 
@@ -243,7 +240,6 @@
         </section>
 
         <section class="reveal">
-            <!-- Sección sin el título "Familia", solo la frase solicitada -->
             <p style="font-size: 1.3rem; letter-spacing: 1px; color: var(--dorado); font-family: var(--fuente-titulos); font-style: italic;">
                 Con la bendición de Dios, mis padres y familia
             </p>
@@ -382,7 +378,7 @@
             }
         }
 
-        // 4. RSVP vía WhatsApp (Sin número de lugares)
+        // 4. RSVP vía WhatsApp
         function sendRSVP() {
             const name = document.getElementById('guestName').value.trim();
             const attend = document.getElementById('attendance').value;
@@ -462,9 +458,8 @@
             for (let i = 0; i < 40; i++) {
                 let p = document.createElement('div');
                 let color = colors[Math.floor(Math.random() * colors.length)];
-                let size = Math.random() * 4 + 1; // Tamaños variados más sutiles
+                let size = Math.random() * 4 + 1;
                 
-                // Efecto de brillo
                 let shadow = `0 0 ${Math.random() * 10 + 5}px ${color}`;
                 
                 p.style.cssText = `
